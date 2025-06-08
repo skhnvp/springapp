@@ -1,6 +1,7 @@
 package ru.testproj.springapp.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.testproj.springapp.repository.User;
 import ru.testproj.springapp.repository.UserRepository;
 
@@ -40,4 +41,26 @@ public class UserService {
         userRepository.delete(optionalUser.get());
     }
 
+    @Transactional
+    public void update(Long id, String name, String email) {
+        Optional<User> optionalUser = userRepository.findById(id);
+        if (optionalUser.isEmpty()) {
+            throw new IllegalArgumentException("User with this id does not exist");
+        }
+        User user = optionalUser.get();
+
+        if (email != null && !email.equals(user.getEmail())) {
+            Optional<User> foundByEmail = Optional.ofNullable(userRepository.findByEmail(email));
+            if (foundByEmail.isPresent()) {
+                throw new IllegalArgumentException("User with this email already exist");
+            }
+            user.setEmail(email);
+        }
+
+        if (name != null && !name.equals(user.getName())) {
+            user.setName(name);
+        }
+
+//        userRepository.save(user); //не нужен при аннотации Transactional
+    }
 }

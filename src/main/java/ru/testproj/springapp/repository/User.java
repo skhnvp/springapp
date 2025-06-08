@@ -1,7 +1,9 @@
 package ru.testproj.springapp.repository;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
@@ -9,6 +11,8 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "users")
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class User {
 
     @Id
@@ -19,16 +23,4 @@ public class User {
     private String email;
     private LocalDate birthday;
     private Integer age;
-
-    public User(Long id, String name, String email, LocalDate birthday, Integer age) {
-        this.id = id;
-        this.name = name;
-        this.email = email;
-        this.birthday = birthday;
-        this.age = age;
-    }
-
-    public User() {
-
-    }
 }
