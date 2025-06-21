@@ -1,12 +1,12 @@
 package ru.testproj.springapp.controller;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import ru.testproj.springapp.repository.User;
+import ru.testproj.springapp.dto.user.UserCreateDto;
+import ru.testproj.springapp.dto.user.UserDto;
+import ru.testproj.springapp.dto.user.UserUpdateDto;
+import ru.testproj.springapp.entity.User;
 import ru.testproj.springapp.service.UserService;
 
-import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -20,12 +20,12 @@ public class UserController {
     }
 
     @GetMapping
-    public List<User> users(){
+    public List<UserDto> users(){
         return userService.findAll();
     }
 
     @PostMapping
-    public User createUser(@RequestBody User user) {
+    public UserDto createUser(@RequestBody UserCreateDto user) {
         return userService.create(user);
     }
 
@@ -35,10 +35,9 @@ public class UserController {
     }
 
     @PutMapping(path = "{id}")
-    public void update(
+    public UserDto update(
             @PathVariable Long id,
-            @RequestParam(required = false) String name,
-            @RequestParam(required = false) String email) {
-        userService.update(id, name, email);
+            @RequestBody UserUpdateDto dto) {
+        return userService.update(id, dto);
     }
 }

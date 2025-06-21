@@ -1,4 +1,4 @@
-package ru.testproj.springapp.repository;
+package ru.testproj.springapp.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -20,7 +20,10 @@ public class User {
     private Long id;
     @Column(name = "name", unique = false, nullable = true, length = 30)
     private String name;
+    @Column(name = "email", unique = false, nullable = true, length = 30)
     private String email;
+    @Column(name = "birthday", unique = false, nullable = true, length = 30)
     private LocalDate birthday;
+    @Column(name = "age", unique = false, nullable = true, length = 3)
     private Integer age;
 }
